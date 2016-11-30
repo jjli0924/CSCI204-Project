@@ -1,54 +1,183 @@
-import sys
+from tkinter import Tk, Label, Button, Entry, IntVar, END, W, E, LabelFrame
+from TextFilter import *
 from tkinter import *
 
-def doNothing():
-    pass
+class GUI:
 
-def bs():
-    pass
+    def __init__(self, master):
+        self.master = master
+        master.title("CSCI-204 Final Project")
+        self.file = None
+        self.filtL = []
+        self.prediction = None
 
-Gui1 = Tk()
-Gui1.geometry('1000x500')
-Gui1.title("CSCI 204 Final Project")
+# message Label Text Stuff
 
-menu = Menu(Gui1)
-Gui1.config(menu=menu)
+        self.workingLabel = Label(master ,text = "File to Edit: ")
+        
+# Entry box storage section
+        vcmd = master.register(self.validate)
+        vcmd1 = master.register(self.validateFile)
+        vcmd2 = master.register(self.validateGenre)
+        vcmd3 = master.register(self.validateYear)
+        vcmd4 = master.register(self.validateAuthor)
+ #       vcmd5 = master.register(self.trainers)
+        self.entry = Entry(master, validate="key",validatecommand=(vcmd, '%P'))
+                        
+# Buttons and input boxes declaration
+        self.add_document = Button(master, text="Add Document", command=lambda: self.update("add"))
 
-docMenu = Menu(menu)
-menu.add_cascade(label=" Documents'", menu = docMenu)
-docMenu.add_command(label = "Documents Window", command=doNothing)
+        self.fileEntry = Entry(master,validate='key',validatecommand = (vcmd, '%P'),bd=3)
+        self.workingEntry = Entry(master,validate='key',validatecommand = (vcmd1,'%P'),bd = 3)
 
+        
 
-trainMenu = Menu(menu)
-menu.add_cascade(label="Train", menu=trainMenu)
-trainMenu.add_command(label="Train", command = doNothing)
+        self.filter0 = Button(master, text= "Normalize White Space", command=lambda: self.appFilter("normalize white space"))
+        self.filter1 = Button(master, text= "Normalize Case", command=lambda: self.appFilter("normalize case"))
+        self.filter2 = Button(master, text= "Strip Null", command=lambda: self.appFilter("strip null characters"))
+        self.filter3 = Button(master, text= "Strip Numbers", command=lambda: self.appFilter("strip numbers"))
+        self.filter4 = Button(master, text= "Strip Common Words", command=lambda: self.appFilter("strip common words"))
+        self.appFilter = Button(master, text= "APPLY FILTERS", command=lambda: self.appFilter("apply filters"))
 
-predictMenu = Menu(menu)
-menu.add_cascade(label="Predict", menu=predictMenu)
-predictMenu.add_command(label="Predit", command = doNothing)
+        self.addInfo = Label(master,text = "-----------Add Info--------------")
+        self.addInfo.grid(row=9,column=1,stick=W+E)
+        self.GenreButt = Button(master, text = 'Enter Genre', command = lambda: self.addInfo('genre'))
+        self.GenreEnt = Entry(master, validate = 'key', validatecommand = (vcmd2,'%P') ,bd=3)       
+        self.YearButt = Button(master, text = 'Enter Year', command = lambda: self.addInfo('year'))
+        self.YearEnt = Entry(master, validate = 'key', validatecommand = (vcmd3,'%P'),bd=3)
+        self.AuthorButt = Button(master, text = 'Enter Author', command = lambda: self.addInfo('author'))
+        self.AuthorEnt = Entry(master, validate = 'key', validatecommand = (vcmd4,'%P'),bd=3)
 
-authorLabel = Label(Gui1,text='Jonathan Li and Katie Lunceford',fg='white',bg='black')
-authorLabel.pack()
+        self.trainsection = Label(master,text="--------Training----------")
+        self.trainsection.grid(row=13,column=1,stick=W+E)
+        self.statmethod1 = Button(master,text = "Stat Method 1",command = lambda: self.chooseStat('1'))
+        self.statmethod2 = Button(master,text = "Stat Method 2",command = lambda: self.chooseStat('2'))
+        self.statmethod3 = Button(master,text = "Stat Method 3",command = lambda: self.chooseStat('3'))
+        self.trainButton = Button(master,text = "TRAIN", command = lambda: self.training())
 
-DescriptionLabel = Label(Gui1,text='This program implements machine learning techniques for the purpose of authorship attribution',fg='white',bg='black')
-DescriptionLabel.pack()
+        self.PredictButton = Button(master,text="Predict",bd=5,command = lambda:self.training())
+        self.PredictLabel = Label(master,text="Prediction: " + str(self.prediction))
 
-labelFrame = LabelFrame(Gui1,text = "Title                                   Genre            Year            Author ")
-labelFrame.pack(fill= "both", expand = "yes")
+        self.master.bind('<Return>',lambda event:self.update("enter"))
+                           
+#Layout and grid
 
-#The different documents will be inserted into the document as followed.
-left = Label(labelFrame,text = "fadsfksad")
-left.pack()
+        self.fileEntry.grid(row=1,column = 0, columnspan = 3,stick=W+E)
+        self.workingLabel.grid(row=4, column = 2, columnspan=3,stick=W+E)
+        self.workingEntry.grid(row=5,column = 2, columnspan=3,stick =W+E)
+        
 
-docName = StringVar()
-docEntry = Entry(Gui1, textvariable= docName)
-docEntry.grid(sticky=W)
-docEntry.pack()
+        self.add_document.grid(row=1,column=3,stick=W+E)
+        self.filter0.grid(row=3,column=1,stick=W+E)
+        self.filter1.grid(row=4,column=1,stick=W+E)
+        self.filter2.grid(row=5,column=1,stick=W+E)
+        self.filter3.grid(row=6,column=1,stick=W+E)
+        self.filter4.grid(row=7,column=1,stick=W+E)
+        self.appFilter.grid(row=8,column=1,stick=W+E)
 
-AddDocumentButton = Button(Gui1,text='Add Document',command=bs)
-AddDocumentButton.grid(sticky=E)
-AddDocumentButton.pack()
+        self.GenreButt.grid(row = 9,column=1,stick=W+E)
+        self.GenreEnt.grid(row=9, column =2,stick = W+E)
+        self.YearButt.grid(row = 10,column=1,stick=W+E)
+        self.YearEnt.grid(row=10, column =2,stick = W+E)
+        self.AuthorButt.grid(row = 11,column=1,stick=W+E)
+        self.AuthorEnt.grid(row=11, column =2,stick = W+E)
 
-trainFrame = LabelFrame(Gui1,text = "TRAIN")
-trainFrame.pack(fill= "both", expand = "yes")
+        self.statmethod1.grid(row=14,column =1, stick = W+E)
+        self.statmethod2.grid(row=15,column =1, stick = W+E)
+        self.statmethod3.grid(row=16,column =1, stick = W+E)
+        self.trainButton.grid(row=15,column=2,stick=W+E)
 
+        self.PredictButton.grid(row=17,column=1,stick=W+E)
+        self.PredictLabel.grid(row=17,column=2)
+                      
+    def validate(self, new_text):
+        if not new_text: # the field is being cleared
+            self.entered_file= 0
+            return True
+
+        try:
+            self.entered_file = str(new_text)
+            return True
+        except ValueError:
+            return False
+
+    def validateFile(self,newtext):
+        if not newtext:
+            self.newFile = 0
+            return True
+        try:
+            self.newFile = newtext
+            return True
+        except ValueError:
+            return False
+
+    def validateGenre(self,newtext):
+        if not newtext:
+            self.genre = None
+            return True
+        try:
+            self.genre = newtext
+            return True
+        except ValueError:
+            return False
+
+    def validateAuthor(self,newtext):
+        if not newtext:
+            self.author = None
+            return True
+        try:
+            self.author = newtext
+            return True
+        except ValueError:
+            return False
+
+    def validateYear(self,newtext):
+        if not newtext:
+            self.year = 0
+            return True
+        try:
+            self.year = newtext
+            return True
+        except ValueError:
+            return False
+
+    def addInfo(self,infotype):
+        if infotype == 'genre':
+            self.newFile.genre = self.genre
+        if infotype == 'year':
+            self.newFile.year = self.year
+        if infotype == 'author':
+            self.newFile.author = self.author
+
+    def appFilter(self,method):
+        '''apply the filter'''
+        if method == "apply filters":
+            newtext = TextFilter(self.newFile,self.filtL)
+            newtext.applyFilters()
+        else:
+            if method not in filtL:
+                self.filtL.append(str(method))
+                
+    def chooseStat(self,method):
+        '''applies the Stat Method'''
+        if method == '1':
+            pass
+        if method == '2':
+            pass
+        if method =='3':
+            pass
+
+    def training(self,method):
+        pass
+                    
+
+    def update(self, method):
+        if method == "add":
+            self.file = str(self.entered_file)
+ #           self.main()
+                                                 
+        self.fileEntry.delete(0,END)
+
+root = Tk()
+my_gui = GUI(root)
+root.mainloop()
