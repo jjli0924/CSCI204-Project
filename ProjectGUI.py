@@ -2,6 +2,9 @@ from tkinter import Tk, Label, Button, Entry, IntVar, END, W, E, LabelFrame
 from TextFilter import *
 from tkinter import *
 
+# predict needs an entry point....
+
+
 class GUI:
 
     def __init__(self, master):
@@ -10,6 +13,7 @@ class GUI:
         self.file = None
         self.filtL = []
         self.prediction = None
+        self.master.minsize(width=350,height=700)
 
 # message Label Text Stuff
 
@@ -40,7 +44,7 @@ class GUI:
         self.appFilter = Button(master, text= "APPLY FILTERS", command=lambda: self.appFilter("apply filters"))
 
         self.addInfo = Label(master,text = "-----------Add Info--------------")
-        self.addInfo.grid(row=9,column=1,stick=W+E)
+        self.addInfo.grid(row=3,column=1,stick=W+E)
         self.GenreButt = Button(master, text = 'Enter Genre', command = lambda: self.addInfo('genre'))
         self.GenreEnt = Entry(master, validate = 'key', validatecommand = (vcmd2,'%P') ,bd=3)       
         self.YearButt = Button(master, text = 'Enter Year', command = lambda: self.addInfo('year'))
@@ -48,8 +52,11 @@ class GUI:
         self.AuthorButt = Button(master, text = 'Enter Author', command = lambda: self.addInfo('author'))
         self.AuthorEnt = Entry(master, validate = 'key', validatecommand = (vcmd4,'%P'),bd=3)
 
+        self.filtlab = Label(master,text="------------Filters------------")
+        self.filtlab.grid(row=7,column=1)
+                             
         self.trainsection = Label(master,text="--------Training----------")
-        self.trainsection.grid(row=13,column=1,stick=W+E)
+        self.trainsection.grid(row=14,column=1,stick=W+E)
         self.statmethod1 = Button(master,text = "Stat Method 1",command = lambda: self.chooseStat('1'))
         self.statmethod2 = Button(master,text = "Stat Method 2",command = lambda: self.chooseStat('2'))
         self.statmethod3 = Button(master,text = "Stat Method 3",command = lambda: self.chooseStat('3'))
@@ -63,33 +70,36 @@ class GUI:
 #Layout and grid
 
         self.fileEntry.grid(row=1,column = 0, columnspan = 3,stick=W+E)
-        self.workingLabel.grid(row=4, column = 2, columnspan=3,stick=W+E)
-        self.workingEntry.grid(row=5,column = 2, columnspan=3,stick =W+E)
-        
 
         self.add_document.grid(row=1,column=3,stick=W+E)
-        self.filter0.grid(row=3,column=1,stick=W+E)
-        self.filter1.grid(row=4,column=1,stick=W+E)
-        self.filter2.grid(row=5,column=1,stick=W+E)
-        self.filter3.grid(row=6,column=1,stick=W+E)
-        self.filter4.grid(row=7,column=1,stick=W+E)
-        self.appFilter.grid(row=8,column=1,stick=W+E)
+        self.filter0.grid(row=8,column=1,stick=W+E)
+        self.filter1.grid(row=9,column=1,stick=W+E)
+        self.filter2.grid(row=10,column=1,stick=W+E)
+        self.filter3.grid(row=11,column=1,stick=W+E)
+        self.filter4.grid(row=12,column=1,stick=W+E)
+        self.appFilter.grid(row=13,column=1,stick=W+E)
 
-        self.GenreButt.grid(row = 9,column=1,stick=W+E)
-        self.GenreEnt.grid(row=9, column =2,stick = W+E)
-        self.YearButt.grid(row = 10,column=1,stick=W+E)
-        self.YearEnt.grid(row=10, column =2,stick = W+E)
-        self.AuthorButt.grid(row = 11,column=1,stick=W+E)
-        self.AuthorEnt.grid(row=11, column =2,stick = W+E)
+        self.GenreButt.grid(row = 4,column=1,stick=W+E)
+        self.GenreEnt.grid(row=4, column =2,stick = W+E)
+        self.YearButt.grid(row = 5,column=1,stick=W+E)
+        self.YearEnt.grid(row=5, column =2,stick = W+E)
+        self.AuthorButt.grid(row = 6,column=1,stick=W+E)
+        self.AuthorEnt.grid(row=6, column =2,stick = W+E)
 
-        self.statmethod1.grid(row=14,column =1, stick = W+E)
-        self.statmethod2.grid(row=15,column =1, stick = W+E)
-        self.statmethod3.grid(row=16,column =1, stick = W+E)
-        self.trainButton.grid(row=15,column=2,stick=W+E)
+        self.statmethod1.grid(row=15,column =1, stick = W+E)
+        self.statmethod2.grid(row=16,column =1, stick = W+E)
+        self.statmethod3.grid(row=17,column =1, stick = W+E)
+        self.trainButton.grid(row=18,column=2,stick=W+E)
 
-        self.PredictButton.grid(row=17,column=1,stick=W+E)
-        self.PredictLabel.grid(row=17,column=2)
-                      
+        self.PredictButton.grid(row=19,column=1,stick=W+E)
+        self.PredictLabel.grid(row=19,column=2)
+
+        self.Documents = Label(master,text="Title                   Genre              Author       Year")
+        self.Documents.grid(row=21,column=1)
+        
+        self.text = Text(master)
+        self.text.grid(row=22,column=1)
+        
     def validate(self, new_text):
         if not new_text: # the field is being cleared
             self.entered_file= 0
@@ -174,6 +184,7 @@ class GUI:
     def update(self, method):
         if method == "add":
             self.file = str(self.entered_file)
+            self.text.insert(INSERT,' '*16 + str(self.entered_file) + '\n')
  #           self.main()
                                                  
         self.fileEntry.delete(0,END)
