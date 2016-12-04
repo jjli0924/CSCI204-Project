@@ -30,11 +30,10 @@ class GUI:
                         
 # Buttons and input boxes declaration
         self.add_document = Button(master, text="Add Document", command=lambda: self.update("add"))
+        self.label1 = Label(master, text= "Document Name: ")
 
         self.fileEntry = Entry(master,validate='key',validatecommand = (vcmd, '%P'),bd=3)
         self.workingEntry = Entry(master,validate='key',validatecommand = (vcmd1,'%P'),bd = 3)
-
-        
 
         self.filter0 = Button(master, text= "Normalize White Space", command=lambda: self.appFilter("normalize white space"))
         self.filter1 = Button(master, text= "Normalize Case", command=lambda: self.appFilter("normalize case"))
@@ -45,11 +44,11 @@ class GUI:
 
         self.addInfo = Label(master,text = "-----------Add Info--------------")
         self.addInfo.grid(row=3,column=1,stick=W+E)
-        self.GenreButt = Button(master, text = 'Enter Genre', command = lambda: self.addInfo('genre'))
+        self.GenreButt = Label(master, text = 'Enter Genre: ')
         self.GenreEnt = Entry(master, validate = 'key', validatecommand = (vcmd2,'%P') ,bd=3)       
-        self.YearButt = Button(master, text = 'Enter Year', command = lambda: self.addInfo('year'))
+        self.YearButt = Label(master, text = 'Enter Year: ')
         self.YearEnt = Entry(master, validate = 'key', validatecommand = (vcmd3,'%P'),bd=3)
-        self.AuthorButt = Button(master, text = 'Enter Author', command = lambda: self.addInfo('author'))
+        self.AuthorButt = Label(master, text = 'Enter Author: ')
         self.AuthorEnt = Entry(master, validate = 'key', validatecommand = (vcmd4,'%P'),bd=3)
 
         self.filtlab = Label(master,text="------------Filters------------")
@@ -57,21 +56,22 @@ class GUI:
                              
         self.trainsection = Label(master,text="--------Training----------")
         self.trainsection.grid(row=14,column=1,stick=W+E)
-        self.statmethod1 = Button(master,text = "Stat Method 1",command = lambda: self.chooseStat('1'))
-        self.statmethod2 = Button(master,text = "Stat Method 2",command = lambda: self.chooseStat('2'))
-        self.statmethod3 = Button(master,text = "Stat Method 3",command = lambda: self.chooseStat('3'))
+        self.statmethod1 = Button(master,text = "Sk Tree",command = lambda: self.chooseStat('1'))
+        self.statmethod2 = Button(master,text = "ID 3",command = lambda: self.chooseStat('2'))
+        self.statmethod3 = Button(master,text = "SKPCA",command = lambda: self.chooseStat('3'))
         self.trainButton = Button(master,text = "TRAIN", command = lambda: self.training())
 
-        self.PredictButton = Button(master,text="Predict",bd=5,command = lambda:self.training())
+        self.PredictButton = Button(master,text="Predict Document",bd=5,command = lambda:self.training())
         self.PredictLabel = Label(master,text="Prediction: " + str(self.prediction))
+        self.predictEntry = Entry(master)
 
         self.master.bind('<Return>',lambda event:self.update("enter"))
                            
 #Layout and grid
+        self.label1.grid(row=1,column=0,columnspan=2,stick=W+E)
+        self.fileEntry.grid(row=1,column = 2, columnspan = 2,stick=W+E)
 
-        self.fileEntry.grid(row=1,column = 0, columnspan = 3,stick=W+E)
-
-        self.add_document.grid(row=1,column=3,stick=W+E)
+        self.add_document.grid(row=6,column=3,stick=W+E)
         self.filter0.grid(row=8,column=1,stick=W+E)
         self.filter1.grid(row=9,column=1,stick=W+E)
         self.filter2.grid(row=10,column=1,stick=W+E)
@@ -92,7 +92,8 @@ class GUI:
         self.trainButton.grid(row=18,column=2,stick=W+E)
 
         self.PredictButton.grid(row=19,column=1,stick=W+E)
-        self.PredictLabel.grid(row=19,column=2)
+        self.predictEntry.grid(row=19,column=2,stick=W+E)
+        self.PredictLabel.grid(row=20,column=1)
 
         self.Documents = Label(master,text="Title                   Genre              Author       Year")
         self.Documents.grid(row=21,column=1)
