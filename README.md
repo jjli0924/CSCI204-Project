@@ -1,3 +1,6 @@
-# CSCI204-Project
+# CSCI204Project
+Project for 204
+CheckPoint 5
+Katie Lunceford
 
-Currently on Checkpoint 5 
+

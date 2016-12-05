@@ -1,6 +1,9 @@
+""" Katie Lunceford
+
 This is the BasicStats object that is used to generate stats about given
 strings. The only attribute is a dictionary that keeps track of how many
 times a word is used.
+
 The methods are topN and bottomN. There is a static method called
 createFreqMap
 """
@@ -28,10 +31,13 @@ class BasicStats:
             #checks if the word is already in the dictionary, if it is it
             #adds one to the value, if it is not it adds it to the dictionary
             #with an initial value of 0
-            if wordList[i] in wordCount:
-                wordCount[wordList[i]] += 1
+            word = wordList[i]
+            if not word[-1].isalpha():
+                word = word[:-1]
+            if word in wordCount:
+                wordCount[word] += 1
             elif wordList[i].isalpha():
-                wordCount[wordList[i]] = 1
+                wordCount[word] = 1
         return wordCount
     """
     The number of operations in this method is n, where n is the length
@@ -160,3 +166,12 @@ class BasicStats:
         heap = h.HeapSort()
         x = heap.minSort(self.dic.items(), n)
         return x
+
+
+
+
+
+
+
+    
+                

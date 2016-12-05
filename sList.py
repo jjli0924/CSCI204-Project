@@ -75,3 +75,6 @@ class SLinkIterator:
             item = self.runner.data
             self.runner = self.runner.next
             return item
+
+    
+        

@@ -6,7 +6,7 @@
 import pandas as pd
 import numpy as np
 from sklearn.tree import DecisionTreeClassifier
-from skleran.tree import export_graphviz
+from sklearn.tree import export_graphviz
 
 
 class SKTree:
@@ -45,10 +45,13 @@ class SKTree:
                 t += [data[row][col]]
             x[row] = t
 
-        y = self.tree.predict(y)
+        x = self.tree.predict(x)
         #Now you will have to get the values from y and move them to the targe column of data
+        return x
 
 
     def toDot(self, filename):
         dot_data = export_graphviz(self.tree, out_file=filename, feature_names=self.labels)
-        
+
+
+    
