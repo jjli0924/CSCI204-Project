@@ -198,14 +198,13 @@ class GUI:
             self.newFile.author = self.author
 
     def applyFilter(self,method):
-        '''apply the filter'''
+        '''Adds filter to list of filter methods if the button pressed is not "Apply Filter". If the button is Apply Filter,
+            then the list of filters will subsequently be applied to the documents.'''
         if method == "apply filters":
             for doc in self.fileL:
                 newtext = TextFilter(doc.fileName, self.filtL)
                 newtext.apply()
                 doc.doc = newtext.doc
-                f = open('tsting.txt', 'w', encoding = 'UTF-8')
-                f.write(doc.doc)
         else:
             if method not in self.filtL:
                 self.filtL.append(str(method))
@@ -215,7 +214,7 @@ class GUI:
         self.statMethod = method
 
     def training(self):
-        '''applies the statistical method for training that the user has clicked on'''
+        '''applies the statistical method for training that the user has clicked on to the documents that were passed'''
         if self.statMethod == '1':
             self.skGenre = f.trainGenre(self.fileL)
         elif self.statMethod == '2':
