@@ -1,8 +1,7 @@
-Project Writeup
-Jon Li with Katie Lunceford
+# CSCI204Project
+Project for 204
+Katie Lunceford with Jon Li
 
-How to use the Program:
-Run UserGUI. The GUI page will open up and the user is presented with the overlay. Go from top to bottom in entering information/clicking through the buttons. So first, enter the document title and enter its information-- the author, genre, and year. Then click add document but don’t click add document until this point. Add all the documents the user wants to train before doing anything else, these should go in the text box at the bottom of the page.. Then, go through the filters and click the filters(should be all of them) the user wants to add and click apply filter when done. These filters will be applied to all the documents. After that, you’re ready to click the method of training(choose 1). Finally enter in the document you want to predict, its year and its genre. Then click predict to predict the entered document based on the method that you chose. You’re done!
-In culmination, what did I learn? This reflection I think is especially important for future work and conduct. First, I realized that I struggled with the algorithms due to a sometimes lack of organization of structure in my head. I found writing out functions and their purposes on paper and creating a skeleton was something essential that I should have remembered every single time I coded. Second, I realized the importance of asking questions. What I didn’t understand should’ve been a priority for me to inquire about.Conceptually understanding all the pieces was something else that I had difficulty with. I think this was simply a hurdle that I have to bite the bullet and put in more work for as that’s what it will take to succeed in terms of computer science. The GUI was something that I initially struggled with and this was ramified by  a few resources that will be utilized more in the future, namely YouTube, GitHub Repositories, and Stack Exchange. I actually asked a few question on Stack Exchange that were extremely helpful for completion of the project. 
-I learned the essence of project management and organization. We see the essence of software engineering and using Github for the first time in a large project led us to see the next step that is serious applications and developing them in conjunction with the back-end which is algorithms and data structures. From an untrained eye, these are not the first aspects the user views, but to a computer scientist, that is the life-blood of a program. 
+User Guide described in FinalWriteUp.doc
+
 

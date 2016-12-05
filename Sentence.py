@@ -3,7 +3,6 @@ This is the Sentence object. It stores a string that represents a sentence with
 punctuation. The attributes are string (the string of the sentence), wordCount
 (the number of words in the sentence), charCount (the number of characters in
 the sentence), and puncuation (the punctuation that the sentence ends with).
-
 The methods are parseWords and parseChar.
 """
 

@@ -72,8 +72,3 @@ class TextFilter:
                 self.stripCommon()
             else:
                 print('Not a valid filter.')
-
-
-
-
-            
