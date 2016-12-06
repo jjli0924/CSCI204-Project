@@ -1,4 +1,10 @@
-""" Katie Lunceford
+""" Katie Lunceford and Jon Li
+This is a plotter class that was used in an old
+checkpoint but not implemented in the final project.
+The initialization takes in two lists and puts these
+lists in the attributes self.y and self.x.
+It has two methods: scatterPlot and barGraph which 
+make the appropriate plots out of self.y and self.x
 """
 
 import matplotlib.pyplot as plt
@@ -22,5 +28,4 @@ class Plotter:
     def barGraph(self):
         plt.bar(self.x, self.y, width = 0.5, align = 'center')
         plt.show()
-
 
